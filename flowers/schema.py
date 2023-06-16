@@ -17,7 +17,6 @@ class VoteType(DjangoObjectType):
 class Query(graphene.ObjectType) : 
     flowers = graphene.List(FlowerType, search=graphene.String())
     votes = graphene.List(VoteType)
-
     
     def resolve_flowers(self, info, search=None, **kwargs) :
         if search:
@@ -92,16 +91,16 @@ class CreateVote(graphene.Mutation):
         if user.is_anonymous:
             raise GraphQLError('You must be logged to vote!')
 
-        flor = Flower.objects.filter(id=flor_id).first()
-        if not flor:
+        flower = Flower.objects.filter(id=flor_id).first()
+        if not flower:
             raise GraphQLError('Invalid Dlor!')
 
         Vote.objects.create(
             user=user,
-            flor=flor,
+            flower=flower,
         )
 
-        return CreateVote(user=user, flor=flor)
+        return CreateVote(user=user, flower=flower)
 
 class Mutation(graphene.ObjectType) :
     create_flower = CreateFlowers.Field()

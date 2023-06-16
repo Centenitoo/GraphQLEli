@@ -19,4 +19,4 @@ class Flower(models.Model) :
     
 class Vote(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    numero = models.ForeignKey('flowers.Flower', related_name='flowers', on_delete=models.CASCADE)
+    flower = models.ForeignKey('flowers.Flower', related_name='flowers', on_delete=models.CASCADE)
